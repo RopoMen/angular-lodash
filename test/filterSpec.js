@@ -1,4 +1,4 @@
-describe('angular-lodash: Filter', function() {
+describe('ropooy-angular-lodash: Filter', function() {
   var simpleAdapList = [
     'map', 'collect',
     'reduce', 'inject', 'foldl',

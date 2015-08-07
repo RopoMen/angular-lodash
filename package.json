@@ -1,11 +1,11 @@
 {
-  "name": "angular-lodash",
+  "name": "ropooy-angular-lodash",
   "description": "Lodash adapter for AngularJS.",
-  "version": "0.1.1",
-  "author": "cabrel <cabrel@zerklabs.com>",
+  "version": "0.5.0",
+  "author": "Markku Roponen <ropooy@gmail.com>",
   "main": "angular-lodash.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cabrel/angular-lodash"
+    "url": "https://github.com/RopoMen/ropooy-angular-lodash.git"
   }
 }

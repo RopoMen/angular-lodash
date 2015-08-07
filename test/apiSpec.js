@@ -1,4 +1,4 @@
-describe('angular-lodash: API', function() {
+describe('ropooy-angular-lodash: API', function() {
   beforeEach(module('_'));
   _.each(_.functions(_), function(fnName) {
     it(fnName + " should adapt to lodash's "+ fnName, inject(function($rootScope) {

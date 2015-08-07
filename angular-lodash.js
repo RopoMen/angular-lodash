@@ -2,9 +2,9 @@
   'use strict';
 
   var
-    lodashModule = ng.module('angular-lodash', []),
-    utilsModule = ng.module('angular-lodash/utils', []),
-    filtersModule = ng.module('angular-lodash/filters', []);
+    lodashModule = ng.module('ropooy-angular-lodash', []),
+    utilsModule = ng.module('ropooy-angular-lodash/utils', []),
+    filtersModule = ng.module('ropooy-angular-lodash/filters', []);
 
   // begin custom _
 
@@ -58,7 +58,7 @@
   // end custom _
 
 
-  // begin register angular-lodash/utils
+  // begin register ropooy-angular-lodash/utils
 
   _.each(_.methods(_), function(methodName) {
     function register($rootScope) {$rootScope[methodName] = _.bind(_[methodName], _);}
@@ -66,19 +66,18 @@
     _.each([
       lodashModule,
       utilsModule,
-      ng.module('angular-lodash/utils/' + methodName, [])
+      ng.module('ropooy-angular-lodash/utils/' + methodName, [])
       ], function(module) {
         module.run(['$rootScope', register]);
     });
   });
 
-  // end register angular-lodash/utils
+  // end register ropooy-angular-lodash/utils
 
 
-  // begin register angular-lodash/filters
+  // begin register ropooy-angular-lodash/filters
 
-  var
-    adapList = [
+  var adapList = [
       ['map', 'collect'],
       ['reduce', 'inject', 'foldl'],
       ['reduceRight', 'foldr'],
@@ -141,13 +140,13 @@
       _.each([
         lodashModule,
         filtersModule,
-        ng.module('angular-lodash/filters/' + filterName, [])
+        ng.module('ropooy-angular-lodash/filters/' + filterName, [])
         ], function(module) {
           module.filter(filterName, filterFactory);
       });
     });
   });
 
-  // end register angular-lodash/filters
+  // end register ropooy-angular-lodash/filters
 
 }(angular, _));

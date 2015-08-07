@@ -12,7 +12,6 @@
   "strict": true,
   "trailing": true,
   "eqnull": true,
-  "es5": true,
   "browser": true,
   "node": true,
   "devel": true,
@@ -22,6 +21,11 @@
     "require",
     "define",
     "angular",
-    "_"
+    "_",
+    "expect",
+    "it",
+    "describe",
+    "beforeEach",
+    "inject"
   ]
 }

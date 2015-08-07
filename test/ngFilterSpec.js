@@ -47,7 +47,7 @@ describe('Filter: filter', function() {
     expect(filter(items, '34').length).toBe(1);
     expect(filter(items, '34')[0]).toBe(1234);
 
-    expect(filter(items, "I don't exist").length).toBe(0);
+    expect(filter(items, 'I don\'t exist').length).toBe(0);
   });
 
   it('should not read $ properties', function() {

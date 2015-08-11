@@ -1,10 +1,10 @@
 (function (ng, _) {
   'use strict';
 
-  var
-    lodashModule = ng.module('ropooy-angular-lodash', []),
+  var lodashModule = ng.module('ropooy-angular-lodash', ['ropooy-angular-lodash/service']),
     utilsModule = ng.module('ropooy-angular-lodash/utils', []),
-    filtersModule = ng.module('ropooy-angular-lodash/filters', []);
+    filtersModule = ng.module('ropooy-angular-lodash/filters', []),
+    diModule = ng.module('ropooy-angular-lodash/service', []);
 
   // begin custom _
 
@@ -57,6 +57,12 @@
 
   // end custom _
 
+  // begin ropooy-angular-lodash/service
+  diModule.factory('_', ['$window', function($window) {
+    return $window._;
+  }]);
+  // end ropooy-angular-lodash/service
+
 
   // begin register ropooy-angular-lodash/utils
 
@@ -95,6 +101,7 @@
       'countBy',
       'shuffle',
       'toArray',
+      'has',
       'size',
       ['first', 'head', 'take'],
       'initial',
@@ -132,8 +139,7 @@
       filterNames = [filterNames];
     }
 
-    var
-      filter = _.bind(_[filterNames[0]], _),
+    var filter = _.bind(_[filterNames[0]], _),
       filterFactory = function() {return filter;};
 
     _.each(filterNames, function(filterName) {

@@ -9,11 +9,18 @@
     "url": "https://github.com/RopoMen/ropooy-angular-lodash.git"
   },
   "scripts": {
-    "test": "gulp jshint"
+    "test": "gulp test"
   },
   "devDependencies": {
+    "angular": "^1.4.3",
+    "angular-mocks": "^1.4.3",
     "gulp": "^3.9.0",
     "gulp-jshint": "^1.11.2",
-    "jshint-stylish": "^2.0.1"
+    "jasmine-core": "^2.3.4",
+    "jshint-stylish": "^2.0.1",
+    "karma": "^0.13.3",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.0",
+    "lodash": "2.4.1"
   }
 }

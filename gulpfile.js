@@ -6,7 +6,10 @@
   var jshint = require('gulp-jshint');
 
   gulp.task('jshint', function() {
-    gulp.src(['gulpfile.js', 'karma.config.js', './test/**/*.js'])
+    gulp.src([
+      './gulpfile.js',
+      './*.js',
+      './test/**/*.js'])
       .pipe(jshint('.jshintrc'))
       .pipe(jshint.reporter('jshint-stylish'));
   });

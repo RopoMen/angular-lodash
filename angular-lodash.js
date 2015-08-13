@@ -65,9 +65,12 @@
 
 
   // begin register ropooy-angular-lodash/utils
-
   _.each(_.methods(_), function(methodName) {
-    function register($rootScope) {$rootScope[methodName] = _.bind(_[methodName], _);}
+    function register($rootScope) {
+      var ScopeProto = _.isFunction(Object.getPrototypeOf) ? Object.getPrototypeOf($rootScope) : $rootScope;
+      //bind methods to Scope prototype or $rootScope if getPrototypeOf is not defined.
+      ScopeProto[methodName] = _.bind(_[methodName], _);
+    }
 
     _.each([
       lodashModule,

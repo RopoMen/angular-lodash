@@ -86,58 +86,67 @@
 
   // begin register ropooy-angular-lodash/filters
 
-  var adapList = [
+  var filterList = [
+      // Arrays
+      'compact',
+      'difference',
+      ['rest', 'drop', 'tail'],
+      ['first', 'head', 'take'],
+      'flatten',
+      'indexOf',
+      'initial',
+      'intersection',
+      'last',
+      'lastIndexOf',
+      ['zipObject', 'object'],
+      'sortedIndex',
+      'union',
+      ['uniq', 'unique'],
+      ['zip', 'unzip'],
+      'without',
+      'xor',
+
+      //Chaining, had 'tap', but it is removed now.
+
+      //Collections, had 'reduce'/'reduceRight'+aliases but those are removed now.
+      'at',
       ['map', 'collect'],
-      ['reduce', 'inject', 'foldl'],
-      ['reduceRight', 'foldr'],
-      ['find', 'detect'],
+      'countBy',
+      ['find', 'detect', 'findWhere'],
       ['filter', 'select'],
-      'where',
-      'findWhere',
-      'reject',
+      'findLast',
+      'groupBy',
       'invoke',
-      'pluck',
       'max',
       'min',
-      'sortBy',
-      'groupBy',
-      'countBy',
+      'pluck',
+      'reject',
       'shuffle',
-      'toArray',
-      'has',
       'size',
-      ['first', 'head', 'take'],
-      'initial',
-      'last',
-      ['rest', 'tail', 'drop'],
-      'compact',
-      'flatten',
-      'without',
-      'union',
-      'intersection',
-      'difference',
-      ['uniq', 'unique'],
-      'zip',
-      'object',
-      'indexOf',
-      'lastIndexOf',
-      'sortedIndex',
-      'keys',
-      'values',
-      'pairs',
-      'invert',
+      'sortBy',
+      'toArray',
+      'where',
+
+      //Functions, none
+
+      //Objects
       ['functions', 'methods'],
-      'pick',
+      'invert',
+      'keys',
       'omit',
-      'tap',
-      'identity',
-      'uniqueId',
+      'pairs',
+      'pick',
+      'values',
+
+      //Utilities, 'template' has been removed.
       'escape',
+      'identity',
       'result',
-      'template'
+      'unescape',
+      'uniqueId'
     ];
 
-  _.each(adapList, function(filterNames) {
+  _.each(filterList, function(filterNames) {
     if(!(_.isArray(filterNames))) {
       filterNames = [filterNames];
     }

@@ -15,8 +15,6 @@ describe('ropooy-angular-lodash: Filter', function() {
 
   var simpleAdapList = [
     'map', 'collect',
-    'reduce', 'inject', 'foldl',
-    'reduceRight', 'foldr',
     'find', 'detect',
     'invoke',
     'pluck',
@@ -42,12 +40,9 @@ describe('ropooy-angular-lodash: Filter', function() {
     'values',
     'functions', 'methods',
     'pick',
-    'tap',
-    'has',
     'uniqueId',
     'escape',
-    'result',
-    'template'
+    'result'
   ];
 
   var $filter;

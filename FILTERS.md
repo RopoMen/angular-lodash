@@ -60,7 +60,7 @@ Guideline summary:
 
 #### Unusable as $filter
 * `indexOf`, `findIndex`, `findLastIndex` and `lastIndexOf` - all retuns index of the found element, else -1. Cannot see any valid use case in view template atm. (could be something like, inside view assignment).
-* `sortedIndex` - returns the index at which value should be inserted into array. Cannot see any valid use case in view template atm. (could be something like, inside view assignment).
+* `sortedIndex` - returns the index at which value should be inserted into array. Cannot see any valid use case in view template atm. (could be something like, inside view assignment). TDOO: shiv..
 * `pull` and `remove` - removes elements from the original array.
 * `range`- creates an array of numbers. *use utility method range() instead*
 

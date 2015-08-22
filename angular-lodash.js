@@ -97,6 +97,7 @@
       'intersection',
       'last',
       'lastIndexOf',
+      'sortedIndex',
       'union',
       ['uniq', 'unique'],
       ['zip', 'unzip'],

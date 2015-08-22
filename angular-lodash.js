@@ -93,22 +93,19 @@
       ['rest', 'drop', 'tail'],
       ['first', 'head', 'take'],
       'flatten',
-      'indexOf',
       'initial',
       'intersection',
       'last',
       'lastIndexOf',
-      ['zipObject', 'object'],
-      'sortedIndex',
       'union',
       ['uniq', 'unique'],
       ['zip', 'unzip'],
       'without',
       'xor',
 
-      //Chaining, had 'tap', but it is removed now.
+      //Chaining, none
 
-      //Collections, had 'reduce'/'reduceRight'+aliases but those are removed now.
+      //Collections
       'at',
       ['map', 'collect'],
       'countBy',
@@ -116,13 +113,13 @@
       ['filter', 'select'],
       'findLast',
       'groupBy',
+      'indexBy',
       'invoke',
       'max',
       'min',
       'pluck',
       'reject',
       'shuffle',
-      'size',
       'sortBy',
       'toArray',
       'where',
@@ -133,14 +130,15 @@
       ['functions', 'methods'],
       'invert',
       'keys',
+      'mapValues',
       'omit',
       'pairs',
       'pick',
       'values',
 
-      //Utilities, 'template' has been removed.
+      //Utilities
       'escape',
-      'identity',
+      'parseInt',
       'result',
       'unescape',
       'uniqueId'

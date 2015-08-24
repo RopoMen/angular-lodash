@@ -1,10 +1,16 @@
 (function (ng, _) {
   'use strict';
+  var moduleName = 'ropooy-angular-lodash';
 
-  var lodashModule = ng.module('ropooy-angular-lodash', ['ropooy-angular-lodash/service']),
-    utilsModule = ng.module('ropooy-angular-lodash/utils', []),
-    filtersModule = ng.module('ropooy-angular-lodash/filters', []),
-    diModule = ng.module('ropooy-angular-lodash/service', []);
+    ng.module(moduleName, [
+      moduleName + '/service',
+      moduleName + '/utils',
+      moduleName + '/filters'
+    ]);
+
+    var utilsModule = ng.module(moduleName + '/utils', []),
+    filtersModule = ng.module(moduleName + '/filters', []),
+    diModule = ng.module(moduleName + '/service', []);
 
   // begin custom _
 
@@ -36,7 +42,7 @@
   // and reserve lodash's feature(works on obj).
   ng.injector(['ng']).invoke(['$filter', function($filter) {
     _.filter = _.select = _.wrap($filter('filter'), function(filter, obj, exp) {
-      if(!(_.isArray(obj))) {
+      if(!_.isArray(obj)) {
         obj = _.toArray(obj);
       }
 
@@ -65,20 +71,13 @@
 
 
   // begin register ropooy-angular-lodash/utils
-  _.each(_.methods(_), function(methodName) {
-    function register($rootScope) {
+  utilsModule.run(['$rootScope', function($rootScope) {
+    _.each(_.methods(_), function(methodName) {
       var ScopeProto = _.isFunction(Object.getPrototypeOf) ? Object.getPrototypeOf($rootScope) : $rootScope;
       //bind methods to Scope prototype or $rootScope if getPrototypeOf is not defined.
       ScopeProto[methodName] = _.bind(_[methodName], _);
-    }
-
-    _.each([
-      lodashModule,
-      utilsModule,
-      ], function(module) {
-        module.run(['$rootScope', register]);
     });
-  });
+  }]);
 
   // end register ropooy-angular-lodash/utils
 
@@ -144,22 +143,10 @@
       'uniqueId'
     ];
 
-  _.each(filterList, function(filterNames) {
-    if(!(_.isArray(filterNames))) {
-      filterNames = [filterNames];
-    }
-
-    var filter = _.bind(_[filterNames[0]], _),
-      filterFactory = function() {return filter;};
-
-    _.each(filterNames, function(filterName) {
-      _.each([
-        lodashModule,
-        filtersModule,
-        ], function(module) {
-          module.filter(filterName, filterFactory);
+  _.each(_.flatten(filterList), function(filterName) {
+      filtersModule.filter(filterName, function() {
+        return _[filterName];
       });
-    });
   });
 
   // end register ropooy-angular-lodash/filters

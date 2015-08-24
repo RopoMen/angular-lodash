@@ -83,8 +83,8 @@ Cleaner way to use LoDash inside angular directives, services, controllers or ev
 ```
 ### History
 * **v0.5 beta** - breaking changes
-  * changed the filter method list, it does not match to the original 'angular-lodash' e07e836561c454ec3f2a325ea4da0233e8c44425
-  * added DI service '_', which may break your own version b78a42bc45c820b79151ae4a5e2fbdfd733ca2f7
-  * removed individual util method or filter method loading, meaning you cannot load anymore `ropooy-angular-lodash/utils/isEmpty` or `ropooy-angular-lodash/filters/escape` separately. Instead you need to load whole utility module and/or filters module.
+  * changed the filter method list, it does not match to the original 'angular-lodash' [e07e8365](https://github.com/RopoMen/ropooy-angular-lodash/commit/e07e836561c454ec3f2a325ea4da0233e8c44425)
+  * added DI service '_', which may break your own version [b78a42bc](https://github.com/RopoMen/ropooy-angular-lodash/commit/b78a42bc45c820b79151ae4a5e2fbdfd733ca2f7)
+  * removed individual util method or filter method loading, meaning you cannot load anymore `ropooy-angular-lodash/utils/isEmpty` or `ropooy-angular-lodash/filters/escape` separately. Instead you need to load whole utility module and/or filters module. [4f317c68](https://github.com/RopoMen/ropooy-angular-lodash/commit/4f317c686d8c05d94825371fa0c7472b4a6ce62c)
 
 ### Note: not available through bower, yet.

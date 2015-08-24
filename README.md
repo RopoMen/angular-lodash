@@ -2,8 +2,12 @@
 
 A fork of [angular-lodash](https://github.com/cabrel/angular-lodash) which is a fork of [angular-underscore](https://github.com/floydsoft/angular-underscore)
 
-This module exposes lodash's API into angular app's root scope,
-and provides some filters from lodash.
+This module exposes lodash's API into AngularJS app's $rootScope, which is then available in view templates. It also provides some LoDash methods as $filters.
+
+```
+WARNING: This is not a drop-in replacement for the original 'angular-lodash' anymore!!
+See release history at the bottom of the page.
+```
 
 #### Why make another fork?
 > I want to keep this wrapper _up_to_date_ and also be more active to posted issues and PR's.
@@ -18,9 +22,8 @@ angular.module('app', ['ropooy-angular-lodash']);
 * 'ropooy-angular-lodash/utils' (API only)
 * 'ropooy-angular-lodash/service' (LoDash as AngularJS DI service)
 * 'ropooy-angular-lodash/filters' (Filters only)
-* 'ropooy-angular-lodash/filters/groupBy' (Just a specific filters)
 
-### Usecase
+### Use cases
 Default stuff for these examples.
 ```html
 <script type="text/javascript">
@@ -45,7 +48,7 @@ Default stuff for these examples.
 </script>
 ```
 
-#### 1. Use defined filters
+#### 1. Use filters module
 LoDash methods listed in 'adapList' array can be used as [AngularJS filter](https://docs.angularjs.org/guide/filter)
 ```html
 <body ng-app="myApp">
@@ -57,8 +60,8 @@ LoDash methods listed in 'adapList' array can be used as [AngularJS filter](http
 </body>
 ```
 
-#### 2. Use defined utils
-All methods defined in LoDash API can be used inside view, controller and directive, because those are bind to $scope. (or in filters and services through $rootScope, but prefer using DI service!)
+#### 2. Use utils module
+All methods defined in LoDash API can be used inside view template, controller and directive, because those are bind to $scope. (or in filters and services through $rootScope, but prefer using DI service!)
 ```html
 <body ng-app="myApp">
   <div ng-controller="MyCtrl">
@@ -69,7 +72,7 @@ All methods defined in LoDash API can be used inside view, controller and direct
 </body>
 ```
 
-#### 3. Use defined _ DI service
+#### 3. Use _ DI service module
 Cleaner way to use LoDash inside angular directives, services, controllers or even inside filters.
 ```html
 <body ng-app="myApp">
@@ -78,5 +81,10 @@ Cleaner way to use LoDash inside angular directives, services, controllers or ev
   </div>
 </body>
 ```
+### History
+* **v0.5 beta** - breaking changes
+  * changed the filter method list, it does not match to the original 'angular-lodash' e07e836561c454ec3f2a325ea4da0233e8c44425
+  * added DI service '_', which may break your own version b78a42bc45c820b79151ae4a5e2fbdfd733ca2f7
+  * removed individual util method or filter method loading, meaning you cannot load anymore `ropooy-angular-lodash/utils/isEmpty` or `ropooy-angular-lodash/filters/escape` separately. Instead you need to load whole utility module and/or filters module.
 
 ### Note: not available through bower, yet.

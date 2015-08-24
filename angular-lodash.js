@@ -75,7 +75,6 @@
     _.each([
       lodashModule,
       utilsModule,
-      ng.module('ropooy-angular-lodash/utils/' + methodName, [])
       ], function(module) {
         module.run(['$rootScope', register]);
     });
@@ -157,7 +156,6 @@
       _.each([
         lodashModule,
         filtersModule,
-        ng.module('ropooy-angular-lodash/filters/' + filterName, [])
         ], function(module) {
           module.filter(filterName, filterFactory);
       });

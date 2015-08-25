@@ -1,21 +1,32 @@
 {
   "name": "ropooy-angular-lodash",
-  "description": "Lodash adapter for AngularJS.",
+  "description": "LoDash adapter for AngularJS.",
   "version": "0.5.0",
   "author": "Markku Roponen <ropooy@gmail.com>",
   "main": "angular-lodash.js",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/RopoMen/ropooy-angular-lodash.git"
   },
+  "keywords": [
+    "angularjs",
+    "lodash",
+    "utility"
+  ],
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "build": "gulp build"
   },
   "devDependencies": {
     "angular": "^1.4.3",
     "angular-mocks": "^1.4.3",
+    "dateformat": "^1.0.11",
     "gulp": "^3.9.0",
+    "gulp-header": "^1.7.1",
     "gulp-jshint": "^1.11.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.3.0",
     "jasmine-core": "^2.3.4",
     "jshint-stylish": "^2.0.1",
     "karma": "^0.13.3",

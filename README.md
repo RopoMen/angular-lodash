@@ -2,7 +2,7 @@
 
 A fork of [angular-lodash](https://github.com/cabrel/angular-lodash) which is a fork of [angular-underscore](https://github.com/floydsoft/angular-underscore)
 
-This module exposes lodash's API into AngularJS app's $rootScope, which is then available in view templates. It also provides some LoDash methods as $filters.
+This module exposes LoDash API into AngularJS app's $scope, which is then available in view templates. It also provides LoDash methods as $filters and `_` as DI service.
 
 ```
 WARNING: This is not a drop-in replacement for the original 'angular-lodash' anymore!!
@@ -12,16 +12,57 @@ See release history at the bottom of the page.
 #### Why make another fork?
 > I want to keep this wrapper _up_to_date_ and also be more active to posted issues and PR's.
 
-#### Load the whole library
+#### Load the whole library and configure it as you like!
 
 ```javascript
-angular.module('app', ['ropooy-angular-lodash']);
+angular.module('app', ['ropooy-angular-lodash'])
+.config(['ngDashConfigProvider', function(ngDashConfigProvider) {
+  // do not load / register filters
+  ngDashConfigProvider.noFilters();
+
+  // do not load all LoDash methods as utility, just load what you need.
+  ngDashConfigProvider.setUtils(['isEmpty', 'isNull', 'range']);
+}]);
 ```
-##### or just a some parts
-* 'ropooy-angular-lodash' (all)
-* 'ropooy-angular-lodash/utils' (API only)
-* 'ropooy-angular-lodash/service' (LoDash as AngularJS DI service)
-* 'ropooy-angular-lodash/filters' (Filters only)
+
+### Configuration
+As mentioned above this is not a drop-in replacement for original `angular-lodash` anymore, but this can be configured to work just like it does (and more). Configuration is done through `ngDashConfigProvider`.
+
+#### `noFilters()`
+If you don't like to use any LoDash method as filter just call this method.
+```js
+ngDashConfigProvider.noFilters();
+```
+
+#### `setFilters(array)`
+Replace default filter methods with your own list.
+```js
+ngDashConfigProvider.setFilters(['escape', 'max']);
+```
+
+#### `addFilters(array)`
+If default filter list is not enough for your app, then just add missing filters.
+```js
+ngDashConfigProvider.addFilters(['forEach', 'indexOf']);
+```
+
+#### `removeFilters(array)`
+If default filter list is almost what you need, you can just remove some.
+```js
+ngDashConfigProvider.removeFilters(['max', 'min']);
+```
+
+#### `noUtils()`
+If you don't like to add LoDash methods available through `$scope` just call this method.
+```js
+ngDashConfigProvider.noUtils();
+```
+
+#### `setUtils(array)`
+If you don't want to bind all LoDash methods in to `$scope`, just add what you need.
+```js
+ngDashConfigProvider.setUtils(['isEmpty', 'isNull', 'isArray', 'range']);
+```
 
 ### Use cases
 Default stuff for these examples.
@@ -33,12 +74,12 @@ Default stuff for these examples.
     $scope.users = [{ 'user': 'barney', 'age': 36 },
                     { 'user': 'fred',   'age': 40 }];
 
-    //For example 2 (requires 'ropooy-angular-lodash/utils')
+    //For example 2
     $scope.getUserNames = function() {
       return $scope.pluck($scope.users, 'user');
     };
 
-    //For example 3 / (requires 'ropooy-angular-lodash/service')
+    //For example 3
     // Why? because '_'.length < '$scope'.length
     // and I hate to use globals inside AngularJS controllers / directives / etc.
     $scope.getNames = function() {
@@ -48,19 +89,18 @@ Default stuff for these examples.
 </script>
 ```
 
-#### 1. Use filters module
-LoDash methods listed in 'adapList' array can be used as [AngularJS filter](https://docs.angularjs.org/guide/filter)
+#### 1. Use as filters
+LoDash methods listed in 'FilterMethodList' array can be used as [AngularJS filter](https://docs.angularjs.org/guide/filter)
 ```html
 <body ng-app="myApp">
   <div ng-controller="MyCtrl">
-    <!-- requires 'ropooy-angular-lodash/filters' -->
     <!-- output unique numbers from input.. [1, 2, 3, 4, 5, 6, 7, 8] -->
     <div ng-repeat="num in [1,1,2,3,4,5,5,6,6,7,7,7,8]|uniq">{{num}}</div>
   </div>
 </body>
 ```
 
-#### 2. Use utils module
+#### 2. Use as utils
 All methods defined in LoDash API can be used inside view template, controller and directive, because those are bind to $scope. (or in filters and services through $rootScope, but prefer using DI service!)
 ```html
 <body ng-app="myApp">
@@ -72,7 +112,7 @@ All methods defined in LoDash API can be used inside view template, controller a
 </body>
 ```
 
-#### 3. Use _ DI service module
+#### 3. Use _ as DI service
 Cleaner way to use LoDash inside angular directives, services, controllers or even inside filters.
 ```html
 <body ng-app="myApp">
@@ -82,6 +122,9 @@ Cleaner way to use LoDash inside angular directives, services, controllers or ev
 </body>
 ```
 ### History
+* **v0.6 beta** - breaking changes
+  * completely rewritten module structure. Added ngLoDashProvider which is used to configure filter methods and utility methods.
+
 * **v0.5 beta** - breaking changes
   * changed the filter method list, it does not match to the original 'angular-lodash' [e07e8365](https://github.com/RopoMen/ropooy-angular-lodash/commit/e07e836561c454ec3f2a325ea4da0233e8c44425)
   * added DI service '_', which may break your own version [b78a42bc](https://github.com/RopoMen/ropooy-angular-lodash/commit/b78a42bc45c820b79151ae4a5e2fbdfd733ca2f7)

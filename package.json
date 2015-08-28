@@ -1,7 +1,7 @@
 {
   "name": "ropooy-angular-lodash",
   "description": "LoDash adapter for AngularJS.",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "author": "Markku Roponen <ropooy@gmail.com>",
   "main": "angular-lodash.js",
   "license": "MIT",

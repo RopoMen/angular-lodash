@@ -1,7 +1,7 @@
 'use strict';
 
 describe('ropooy-angular-lodash: API', function () {
-    beforeEach(module('ropooy-angular-lodash/service'));
+    beforeEach(module('ropooy-angular-lodash'));
 
     var DIDash;
 

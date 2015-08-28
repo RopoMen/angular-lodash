@@ -1,7 +1,7 @@
 'use strict';
 
 describe('ropooy-angular-lodash: API', function () {
-    beforeEach(module('ropooy-angular-lodash/utils'));
+    beforeEach(module('ropooy-angular-lodash'));
 
     var $window,
         $rootScope,

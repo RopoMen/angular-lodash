@@ -1,18 +1,146 @@
-(function (ng, _) {
+(function (angular, _) {
   'use strict';
-  var moduleName = 'ropooy-angular-lodash';
 
-    ng.module(moduleName, [
-      moduleName + '/service',
-      moduleName + '/utils',
-      moduleName + '/filters'
-    ]);
+  var ngDashModule = angular.module('ropooy-angular-lodash', []);
+  var FilterMethodList = [
+    // Arrays
+    'compact',
+    'difference',
+    ['rest', 'drop', 'tail'],
+    //'findIndex',
+    //'findLastIndex',
+    ['first', 'head', 'take'],
+    'flatten',
+    //'indexOf',
+    'initial',
+    'intersection',
+    'last',
+    'lastIndexOf',
+    //'pull',
+    //'range',
+    //'remove',
+    'sortedIndex',
+    //['tail', 'rest'],
+    'union',
+    ['uniq', 'unique'],
+    'without',
+    'xor',
+    ['zip', 'unzip'],
+    //['zipObject', 'object'],
 
-    var utilsModule = ng.module(moduleName + '/utils', []),
-    filtersModule = ng.module(moduleName + '/filters', []),
-    diModule = ng.module(moduleName + '/service', []);
+    //Chaining, none
+    //'_',
+    //'chain',
+    //'tap',
 
-  // begin custom _
+    //Collections
+    'at',
+    //['contains', 'include'],
+    'countBy',
+    //['every', 'all'],
+    ['find', 'detect', 'findWhere'],
+    ['filter', 'select'],
+    'findLast',
+    //['forEach', 'each'],
+    //['forEachRight', 'eachRight'],
+    'groupBy',
+    'indexBy',
+    'invoke',
+    ['map', 'collect'],
+    'max',
+    'min',
+    'pluck',
+    //['reduce', 'foldl', 'inject'],
+    //['reduceRight', 'foldr'],
+    'reject',
+    //'sample',
+    'shuffle',
+    //'size',
+    //['some', 'any'],
+    'sortBy',
+    'toArray',
+    'where',
+
+    //Functions, none
+    //'after',
+    //'bind',
+    //'bindAll',
+    //'bindKey',
+    //'compose',
+    //'curry',
+    //'debounce',
+    //'defer',
+    //'delay',
+    //'memoize',
+    //'once',
+    //'partial',
+    //'partialRight',
+    //'throttle',
+    //'wrap',
+
+    //Objects
+    //['assign', 'extend'],
+    //'clone',
+    //'cloneDeep',
+    //'create',
+    //'defaults',
+    //'findKey',
+    //'findLastKey',
+    //'forIn'
+    //'forInRight',
+    //'forOwn',
+    ['functions', 'methods'],
+    //'has',
+    'invert',
+    //'isArguments',
+    //'isArray',
+    //'isBoolean',
+    //'isDate',
+    //'isElement',
+    //'isEmpty',
+    //'isEqual',
+    //'isFinite',
+    //'isFunction',
+    //'isNaN',
+    //'isNull',
+    //'isNumber',
+    //'isObject',
+    //'isPlainObject',
+    //'isRegExp',
+    //'isString',
+    //'isUndefined',
+    'keys',
+    'mapValues',
+    //'merge',
+    'omit',
+    'pairs',
+    'pick',
+    //'transform',
+    'values',
+
+    //Utilities
+    //'now',
+    //'constant',
+    //'createCallback',
+    'escape',
+    //'identity',
+    //'mixin',
+    //'noConflict',
+    //'noop',
+    'parseInt',
+    //'property',
+    //'random',
+    'result',
+    //'runInContext',
+    //'template',
+    //'times'
+    'unescape',
+    'uniqueId'
+  ];
+
+  var UtilMethodList = null;
+
+  /*** begin custom _ ***/
 
   function propGetterFactory(prop) {
     return function(obj) {return obj[prop];};
@@ -40,7 +168,7 @@
 
   // Shiv "filter", "reject" to angular's built-in,
   // and reserve lodash's feature(works on obj).
-  ng.injector(['ng']).invoke(['$filter', function($filter) {
+  angular.injector(['ng']).invoke(['$filter', function($filter) {
     _.filter = _.select = _.wrap($filter('filter'), function(filter, obj, exp) {
       if(!_.isArray(obj)) {
         obj = _.toArray(obj);
@@ -61,94 +189,87 @@
     };
   }]);
 
-  // end custom _
+  /*** end custom _ ***/
 
-  // begin ropooy-angular-lodash/service
-  diModule.factory('_', ['$window', function($window) {
+  ngDashModule.provider('ngDashConfig', function() {
+      var initializeFilters = true;
+      var initializeUtils = true;
+      var FilterProvider = {};
+
+      /* do not initialize filters that are defined in FilterMethodList */
+      this.noFilters = function() {
+        initializeFilters = false;
+      };
+
+      /* do not initialize utils that are defined in UtilMethodList */
+      this.noUtils = function() {
+        initializeUtils = false;
+      };
+
+      /* set whole filter method list, expecting filters to be an array */
+      this.setFilters = function(filters) {
+        FilterMethodList = filters;
+      };
+
+      /* add filters that you like to extend the FilterMethodList */
+      this.addFilters = function(filters) {
+        FilterMethodList = _.union(_.flatten(FilterMethodList), filters);
+      };
+
+      /* remove filters that you like to be removed from FilterMethodList */
+      this.removeFilters = function(filters) {
+        FilterMethodList = _.difference(_.flatten(FilterMethodList), filters);
+      };
+
+      /* set whole util method list, expectin utils to be an array, if no list is given all methods in _ will be used */
+      this.setUtils = function(utils) {
+        UtilMethodList = utils;
+      };
+
+      /* private */
+      this._setFilterProvider = function(provider) {
+        FilterProvider = provider;
+      };
+
+      this.$get = [function() {
+          return {
+            initFilters: initializeFilters,
+            initUtils: initializeUtils,
+            filterProvider: FilterProvider
+          };
+      }];
+  })
+  .factory('_', ['$window', function($window) {
     return $window._;
-  }]);
-  // end ropooy-angular-lodash/service
+  }])
+  .config(['ngDashConfigProvider', '$filterProvider', function(ngDashConfigProvider, $filterProvider) {
+    /* keep reference to filter provider so we can register filters inside run block */
+    ngDashConfigProvider._setFilterProvider($filterProvider);
+  }])
+  .run(['$rootScope', 'ngDashConfig', function($rootScope, ngDashConfig) {
+    /* create filters */
+    if(ngDashConfig.initFilters) {
+      FilterMethodList = _.flatten(FilterMethodList);
 
-
-  // begin register ropooy-angular-lodash/utils
-  utilsModule.run(['$rootScope', function($rootScope) {
-    _.each(_.methods(_), function(methodName) {
-      var ScopeProto = _.isFunction(Object.getPrototypeOf) ? Object.getPrototypeOf($rootScope) : $rootScope;
-      //bind methods to Scope prototype or $rootScope if getPrototypeOf is not defined.
-      ScopeProto[methodName] = _.bind(_[methodName], _);
-    });
-  }]);
-
-  // end register ropooy-angular-lodash/utils
-
-
-  // begin register ropooy-angular-lodash/filters
-
-  var filterList = [
-      // Arrays
-      'compact',
-      'difference',
-      ['rest', 'drop', 'tail'],
-      ['first', 'head', 'take'],
-      'flatten',
-      'initial',
-      'intersection',
-      'last',
-      'lastIndexOf',
-      'sortedIndex',
-      'union',
-      ['uniq', 'unique'],
-      ['zip', 'unzip'],
-      'without',
-      'xor',
-
-      //Chaining, none
-
-      //Collections
-      'at',
-      ['map', 'collect'],
-      'countBy',
-      ['find', 'detect', 'findWhere'],
-      ['filter', 'select'],
-      'findLast',
-      'groupBy',
-      'indexBy',
-      'invoke',
-      'max',
-      'min',
-      'pluck',
-      'reject',
-      'shuffle',
-      'sortBy',
-      'toArray',
-      'where',
-
-      //Functions, none
-
-      //Objects
-      ['functions', 'methods'],
-      'invert',
-      'keys',
-      'mapValues',
-      'omit',
-      'pairs',
-      'pick',
-      'values',
-
-      //Utilities
-      'escape',
-      'parseInt',
-      'result',
-      'unescape',
-      'uniqueId'
-    ];
-
-  _.each(_.flatten(filterList), function(filterName) {
-      filtersModule.filter(filterName, function() {
-        return _[filterName];
+      _.each(FilterMethodList, function(filterName) {
+        ngDashConfig.filterProvider.register(filterName, function() {
+          return _[filterName];
+        });
       });
-  });
+    }
 
-  // end register ropooy-angular-lodash/filters
+    /* create utils */
+    if(ngDashConfig.initUtils) {
+      if(_.isNull(UtilMethodList)) {
+        UtilMethodList = _.methods(_);
+      }
+
+      _.each(UtilMethodList, function(methodName) {
+        var ScopeProto = _.isFunction(Object.getPrototypeOf) ? Object.getPrototypeOf($rootScope) : $rootScope;
+        //bind methods to Scope prototype or $rootScope if getPrototypeOf is not defined.
+        ScopeProto[methodName] = _.bind(_[methodName], _);
+      });
+    }
+  }]);
 
 }(angular, _));

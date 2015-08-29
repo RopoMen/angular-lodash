@@ -245,14 +245,14 @@
           };
       }];
   })
-  .config(['ngDashConfigProvider', '$filterProvider', '$provide', function(ngDashConfigProvider, $filterProvider, $provide) {
+  .config(function(ngDashConfigProvider, $filterProvider, $provide) {
     /* keep reference to filter provider so we can register filters inside run block */
     ngDashConfigProvider._setFilterProvider($filterProvider);
 
     /* keep reference to service provider so we can register _ service inside run block, IF no one has registered it before */
     ngDashConfigProvider._setServiceProvider($provide);
-  }])
-  .run(['$rootScope', '$injector', '$window', '$log', 'ngDashConfig', function($rootScope, $injector, $window, $log, ngDashConfig) {
+  })
+  .run(function($rootScope, $injector, $window, $log, ngDashConfig) {
     /* create service, but do not override existing! */
     if($injector.has('_')) {
       $log.error('ropooy-angular-lodash:: service "_" is already registered, please remove your own if you want to use it from here.');
@@ -298,6 +298,6 @@
         ScopeProto[methodName] = _.bind(_[methodName], _);
       });
     }
-  }]);
+  });
 
 }(angular, _));

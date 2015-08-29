@@ -1,4 +1,4 @@
-# An AngularJS module adapting lodash
+# An AngularJS module adapting LoDash
 
 A fork of [angular-lodash](https://github.com/cabrel/angular-lodash) which is a fork of [angular-underscore](https://github.com/floydsoft/angular-underscore)
 
@@ -23,6 +23,12 @@ angular.module('app', ['ropooy-angular-lodash'])
   // do not load all LoDash methods as utility, just load what you need.
   ngDashConfigProvider.setUtils(['isEmpty', 'isNull', 'range']);
 }]);
+```
+
+### Launch example
+Project has a small example that you can use to play with the module. Just copy-paste this to bash. ( server will run in http://localhost:8080 )
+```bash
+npm install && npm run example
 ```
 
 ### Configuration

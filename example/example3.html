@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ropooy-angular-lodash - Example 3</title>
+
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+
+	<script type="text/javascript" src="../node_modules/lodash/dist/lodash.min.js"></script>
+	<script type="text/javascript" src="../node_modules/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../angular-lodash.js"></script>
+
+	<script type="text/javascript">
+		(function() {
+			'use strict';
+
+			angular.module('myApp', ['ropooy-angular-lodash'])
+			.config(['ngDashConfigProvider', function(ngDashConfigProvider) {
+				// in this example we do not need filters, so we can disable util method registeration.
+				ngDashConfigProvider.noUtils();
+
+				// remove some filters
+				ngDashConfigProvider.removeFilters(['flatten', 'initial']);
+
+				// actually add these back
+				ngDashConfigProvider.addFilters(['flatten', 'initial']);
+			}])
+			/* jshint unused: false */
+			.controller('myCtrl', ['$scope', '$filter', function($scope, $filter) {
+				$scope.mixd = [1,1,2,3,4,5,5,6,6,7,7,7,8,50,60,60,51,30,33];
+
+				/*
+					Note 1: if you want you can test here how filters now work, by adding breakpoint inside this
+					controller. If you type $filter('date') [enter] in console you are not getting error, because
+					'date' filter is default AngularJS filter. Also if you type $filter('groupBy') you will not get
+					error, because LoDash filters are now registered in this example, see below .config()
+				*/
+
+				/*
+					Note 2: you can also type $scope.groupBy and see that none of the LoDash methods are now 
+					bind to $scope, because utils are disabled inside .config() section.
+				*/
+			}]);
+		})();
+	</script>
+</head>
+<body ng-app="myApp">
+	<div class="container">
+		
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="index.html"><i class="glyphicon glyphicon-home"></i> -Back to index</a>
+				</div>
+
+				<ul class="nav navbar-nav">
+					<li><a href="example1.html">Example 1 - service</a></li>
+        			<li><a href="example2.html">Example 2 - utils</a></li>
+					<li class="active"><a href="example3.html">Example 3 - filters</a></li>
+				</ul>
+			</div>
+		</nav>
+
+		<h3>Example 3 - how to use filter methods?</h3>
+		<p>
+			Some of the LoDash methods can be registered as $filter, default list is defined in <mark>FilterMethodList</mark> variable inside <i>angular-lodash.js</i> file. Filters are intended to be used inside view templates.
+		</p>
+		<p>
+			By default methods listed in <mark>FilterMethodList</mark> are registered as $filter, you can change that list through <mark>ngDashConfigProvider.setFilters(), ngDashConfigProvider.addFilters() and ngDashConfigProvider.removeFilters()</mark>. Checkout the page source for more details!
+		</p>
+
+		<h5>Example app</h5>
+		<div class="well well-lg" ng-controller="myCtrl">
+			<h4>Checkout from view template how LoDash is used as filters</h4>
+
+			<h5 class="text-primary">Using 'uniq' as filter</h5>
+			<ul>
+				<!-- yes this will cause "Error: [$rootScope:infdig]" atm. because array reference proviced by 'uniq' filter changes and for that 10 $digest loop limit will be hitted.-->
+				<li ng-repeat="num in mixd |uniq">Should be uniq {{num}}</li>
+			</ul>
+
+			<h5 class="text-primary">Using 'uniq' and 'shuffle' as filter</h5>
+			<ul>
+				<!-- yes, this will cause "Error: [$rootScope:infdig]" atm. -->
+				<li ng-repeat="num in mixd |uniq |shuffle track by $index">Should be shuffled uniq {{num}}</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

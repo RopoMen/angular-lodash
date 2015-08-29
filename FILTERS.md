@@ -10,17 +10,17 @@ First of all AngularJS [Filter developer guide](https://docs.angularjs.org/guide
 Ok, now let's start discussion of the rulez!
 
 1. Selected method **cannot** alter the original value. This means that it is not allowed to remove any values from original Array or Object. It also cannot change the original String or Number in anyways.
-1. *They can be used in view templates, controllers or services...*, when we start to thinking about this, we should remember that 'ropooy-angular-lodash/service' is providing service '_', which can be injected in to Service, Controller, Directive and Filter.
+1. *They can be used in view templates, controllers or services...*, when we start to thinking about this, we should remember that `ropooy-angular-lodash` is providing service `_`, which can be injected in to Service, Controller, Directive and Filter.
 
-	Example below shows the ways how you can currently use filter functions inside Service, Controller, Directive or Filter. If you ask from me, I would use service '_' instead of any other ways. (less writing)
+	Example below shows the ways how you can currently use LoDash functions inside Service, Controller, Directive or Filter. If you ask from me, I would use service `_` instead of any other ways. (less writing)
 	```javascript
 	//simplified controller...
 	function($scope, $filter, _) {
-		//from 'ropooy-angular-lodash/utils'
+		// as util
 		var way1 = $scope.uniq([1, 2, 1]);
-		//from 'ropooy-angular-lodash/filters'
+		// as filter
 		var way2 = $filter('uniq')([1, 2, 1]);
-		//from 'ropooy-angular-lodash/service'
+		// as DI service
 		var way3 = _.uniq([1, 2, 1]);
 	}
 	```
@@ -132,8 +132,7 @@ Guideline summary:
 
 ## Notes
 * First iteration was pretty difficult in some parts, especially when LoDash method was returning Object, because then you had to think whether it was usable as filter or was it more like utility.
-* I also noticed that if you are using `ropooy-angular-lodash/utils` are you benefiting at all from the
-`ropooy-angular-lodash/filters`?
+* I also noticed that if you are using `util` methods through `$scope` are you benefiting at all from the `$filter`?
 * And from that I realized that biggest question probably is do you want to bind all LoDash methods in to $scope or use only methods that work as $filter?
 
 

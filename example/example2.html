@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ropooy-angular-lodash - Example 2</title>
+
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+
+	<script type="text/javascript" src="../node_modules/lodash/dist/lodash.min.js"></script>
+	<script type="text/javascript" src="../node_modules/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../angular-lodash.js"></script>
+
+	<script type="text/javascript">
+		(function() {
+			'use strict';
+
+			angular.module('myApp', ['ropooy-angular-lodash'])
+			.config(['ngDashConfigProvider', function(ngDashConfigProvider) {
+				// in this example we do not need filters, so we can disable filter registeration.
+				ngDashConfigProvider.noFilters();
+			}])
+			/* jshint unused: false */
+			.controller('myCtrl', ['$scope', '$filter', function($scope, $filter) {
+				$scope.year = null;
+
+				/*
+					Note 1: if you want you can test here how filters now work, by adding breakpoint inside this
+					controller. If you type $filter('date') [enter] in console you are not getting error, because
+					'date' filter is default AngularJS filter. But if you type $filter('groupBy') you will get
+					error, because LoDash filters are not registered in this example, see below .config()
+				*/
+
+				/*
+					Note 2: you can also type $scope.groupBy in console and you can notice that all LoDash
+					methods are available through $scope. If you like you can also provide your own utility
+					method list which are bind to $scope by defining 
+					ngDashConfigProvider.setUtils(['isEmpty', 'isNull'])
+
+					then if you check what $scope contains, you will notice that only 'isEmpty' and 'isNull' are 
+					available.
+				*/
+			}]);
+		})();
+	</script>
+</head>
+<body ng-app="myApp">
+	<div class="container">
+		
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="index.html"><i class="glyphicon glyphicon-home"></i> -Back to index</a>
+				</div>
+
+				<ul class="nav navbar-nav">
+					<li><a href="example1.html">Example 1 - service</a></li>
+        			<li class="active"><a href="example2.html">Example 2 - utils</a></li>
+					<li><a href="example3.html">Example 3 - filters</a></li>
+				</ul>
+			</div>
+		</nav>
+
+		<h3>Example 2 - how to use utility methods?</h3>
+		<p>
+			Utility methods are bind to <mark>$rootScope</mark> or even more precise <u><b>Scope prototype</b></u> from there those methods are also available inside <a href="https://docs.angularjs.org/guide/directive" target="_blank">isolated</a> scope. Utility methods are intended to be used inside view templates.
+		</p>
+		<p>
+			By default all methods available in LoDash <mark>_</mark> will be added in to $rootScope as utility. You can override that with methods that you need inside <i>config</i> section by calling <mark>ngDashConfigProvider.setUtils()</mark>. Checkout the page source for more details!
+		</p>
+
+		<h5>Example app</h5>
+		<div class="well well-lg" ng-controller="myCtrl">
+			<h4>Checkout from view template how LoDash is used as utility</h4>
+			<h5 class="text-primary" ng-if="isNull(year);">default state where you have not selected birth year and <mark>$scope.year</mark> is null</h5>
+			<h5 class="text-success ng-hide" ng-show="isNumber(year);">now you have selected birth year {{year}} and <mark>$scope.year</mark> is now number</h5>
+
+			<form>
+				<div class="form-group">
+					<label for="birthyear">Birth year</label>
+					<select ng-options="year+1920 as year+1920 for year in range(0, 100)" ng-model="year">
+						<option value="">-- choose year --</option>
+					</select>
+  				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

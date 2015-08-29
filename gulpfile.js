@@ -8,6 +8,8 @@
   var header = require('gulp-header');
   var KarmaServer = require('karma').Server;
   var jshint = require('gulp-jshint');
+  var connect = require('gulp-connect');
+
   var pkg = {};
   var banner = ['/**',
     ' * <%= pkg.name %> - <%= pkg.description %>',
@@ -19,11 +21,17 @@
     ''].join('\n');
   var buildTime = '';
 
+  gulp.task('example', function() {
+    connect.server();
+  });
+
   gulp.task('jshint', function() {
     gulp.src([
       './gulpfile.js',
       './*.js',
-      './test/**/*.js'])
+      './test/**/*.js',
+      './example/*.html'])
+      .pipe(jshint.extract())
       .pipe(jshint('.jshintrc'))
       .pipe(jshint.reporter('jshint-stylish'));
   });

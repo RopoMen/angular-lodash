@@ -63,6 +63,16 @@ If default filter list is almost what you need, you can just remove some.
 ngDashConfigProvider.removeFilters(['max', 'min']);
 ```
 
+#### `registerCustomFilter(string, function)`
+Register custom LoDash mixin and register it as $filter.
+```js
+ngDashConfigProvider.registerCustomFilter('customUniq', function(arr) {
+  return this.uniq(this.filter(arr, function(n) {
+    return n <= 5;
+  }));
+});
+```
+
 #### `noUtils()`
 If you don't like to add LoDash methods available through `$scope` just call this method.
 ```js
@@ -79,8 +89,15 @@ ngDashConfigProvider.setUtils(['isEmpty', 'isNull', 'isArray', 'range']);
 Default stuff for these examples.
 ```html
 <script type="text/javascript">
-  angular.module('myApp', ['ropooy-angular-lodash']);
-  app.controller('MyCtrl', function($scope, _) {
+  angular.module('myApp', ['ropooy-angular-lodash'])
+  .config(function(ngDashConfigProvider) {
+    ngDashConfigProvider.registerCustomFilter('customUniq', function(arr) {
+      return this.uniq(this.filter(arr, function(n) {
+        return n <= 5;
+      }));
+    });
+  })
+  .controller('MyCtrl', function($scope, _) {
     $scope.cats = [];
     $scope.users = [{ 'user': 'barney', 'age': 36 },
                     { 'user': 'fred',   'age': 40 }];
@@ -132,7 +149,19 @@ Cleaner way to use LoDash inside angular directives, services, controllers or ev
   </div>
 </body>
 ```
+
+#### 4. Use custom mixin as filter
+```html
+<body ng-app="myApp">
+  <div ng-controller="MyCtrl">
+    <!-- output unique numbers from input.. [1, 2, 3, 4, 5] -->
+    <span ng-repeat="num in [1,10,1,2,3,4,5,5,6,6,7,7,7,8]|customUniq">{{num}}</span>
+  </div>
+</body>
+```
+
 ### History
+* **v1.3** - ability to add your own LoDash mixins as $filter. This can be done either in .config() phase or for example .directive() pre compile phase as lazy load.
 * **v1.0** - first version available through Bower, supports LoDash v2.4.1
 * **v0.6 beta** - breaking changes
   * completely rewritten module structure. Added ngLoDashProvider which is used to configure filter methods and utility methods.

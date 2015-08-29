@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ropooy-angular-lodash - Example 4</title>
+
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+
+	<script type="text/javascript" src="../node_modules/lodash/dist/lodash.min.js"></script>
+	<script type="text/javascript" src="../node_modules/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../angular-lodash.js"></script>
+
+	<script type="text/javascript">
+		(function() {
+			'use strict';
+
+			/* way 1 - provide your own mixins from somewhere (example from another js file) */
+			_.mixin({'custom1': function(arr) {
+				return _.uniq(_.filter(arr, function(n) {
+					return n >= 3 && n <=30;
+				}));
+			}});
+
+			angular.module('myApp', ['ropooy-angular-lodash'])
+			.config(['ngDashConfigProvider', function(ngDashConfigProvider) {
+				// in this example we do not need filters, so we can disable util method registeration.
+				ngDashConfigProvider.noUtils();
+
+				/* way 1 - and register those as filter */
+				ngDashConfigProvider.addFilters(['custom1']);
+
+				/* way 2 - register filter and _.bind() given method also as _.mixin() */
+				ngDashConfigProvider.registerCustomFilter('custom2', function(arr) {
+					return this.uniq(this.sortBy(arr, function(n) {
+						return n;
+					})).reverse();
+				});
+			}])
+			.directive('lazy', ['ngDashConfig', function(ngDashConfig) {
+				return {
+					template: '<ul><li ng-repeat="num in mixd |custom3">{{num}}</li></ul>',
+					replace: true,
+					compile: function() {
+						return {
+							/* way 3 */
+							/* Note: if you change 'pre' to 'post' it is late to register that filter */
+							pre: function() {
+								ngDashConfig.registerCustomFilter('custom3', function(arr) {
+									return this.uniq(this.filter(arr, function(n) {
+										return n <= 10;
+									}));
+								});
+							}
+						};
+					}
+				};
+			}])
+			/* jshint unused: false */
+			.controller('myCtrl', ['$scope', function($scope) {
+				$scope.mixd = [1,1,2,3,4,5,5,6,6,7,7,7,8,50,60,60,51,30,33];
+			}]);
+		})();
+	</script>
+</head>
+<body ng-app="myApp">
+	<div class="container">
+		
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="index.html"><i class="glyphicon glyphicon-home"></i> -Back to index</a>
+				</div>
+
+				<ul class="nav navbar-nav">
+					<li><a href="example1.html">Example 1 - service</a></li>
+        			<li><a href="example2.html">Example 2 - utils</a></li>
+					<li><a href="example3.html">Example 3 - filters</a></li>
+					<li class="active"><a href="example4.html">Example 4 - filters</a></li>
+				</ul>
+			</div>
+		</nav>
+
+		<h3>Example 4 - how to use register custom LoDash based filters?</h3>
+		<p>
+			You can create your own LoDash filters easily by combining different LoDash methods to more complex ones (mixins). You can defined LoDash mixins in separate js file and just register
+			those as filters inside .config() section. Or you can defined your custom filters for example
+			.directive() pre compile phase. 
+		</p>
+
+		<h5>Example app</h5>
+		<div class="well well-lg" ng-controller="myCtrl">
+			<h4>Checkout from view template how register custom LoDash filters</h4>
+
+			<h5 class="text-primary">Way 1 check the .config() <small>should be uniq and between 3 to 30</small></h5>
+			<ul>
+				<!-- yes this will cause "Error: [$rootScope:infdig]" atm. -->
+				<li ng-repeat="num in mixd |custom1">{{num}}</li>
+			</ul>
+
+			<h5 class="text-primary">Way 2 check the .config() <small>should be uniq and biggest number first</small></h5>
+			<ul>
+				<li ng-repeat="num in mixd |custom2">{{num}}</li>
+			</ul>
+
+			<h5 class="text-primary">Way 3 lazy load inside .directive() just before you need it inside view template <small>should be uniq and less than 10</small></h5>
+			<div lazy></div>
+		</div>
+	</div>
+</body>
+</html>

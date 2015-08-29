@@ -222,6 +222,27 @@
         FilterMethodList = _.difference(_.flatten(FilterMethodList), filters);
       };
 
+      /* register custom filter */
+      this.registerCustomFilter = function(filterName, filterConstructor) {
+        if(_.isEmpty(FilterProvider)) {
+          // http://stackoverflow.com/questions/28620927/angularjs-provider-dependency-injection-using-log-in-provider
+          // $log.error('ropooy-angular-lodash: registering custom filter, FilterProvider is not available!');
+          return;
+        }
+
+        /* filter is not yet bind to LoDash */
+        if(!_.isFunction(_[filterName])) {
+          var obj = {};
+          obj[filterName] = _.bind(filterConstructor, _);
+          _.mixin(obj);
+        }
+
+        /* now register it as filter */
+        FilterProvider.register(filterName, function() {
+          return _[filterName];
+        });
+      };
+
       /* set whole util method list, expectin utils to be an array, if no list is given all methods in _ will be used */
       this.setUtils = function(utils) {
         UtilMethodList = utils;
@@ -241,7 +262,8 @@
             initFilters: initializeFilters,
             initUtils: initializeUtils,
             filterProvider: FilterProvider,
-            serviceProvider: ServiceProvider
+            serviceProvider: ServiceProvider,
+            registerCustomFilter: this.registerCustomFilter // make this available after .config() phase.
           };
       }];
   })

@@ -1,14 +1,22 @@
 {
   "name": "angular-lodash",
   "main": "angular-lodash.js",
-  "version": "0.6.0",
-  "homepage": "https://github.com/RopoMen/ropooy-angular-lodash.git",
+  "version": "1.0.0",
+  "authors": ["Markku Roponen <ropooy@gmail.com>"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RopoMen/ropooy-angular-lodash.git"
+  },
+  "keywords": [
+    "angularjs",
+    "lodash",
+    "utility"
+  ],
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+    "bower_components"
   ],
   "dependencies": {
     "lodash": "~2.4.1"

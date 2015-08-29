@@ -195,6 +195,7 @@
       var initializeFilters = true;
       var initializeUtils = true;
       var FilterProvider = {};
+      var ServiceProvider = {};
 
       /* do not initialize filters that are defined in FilterMethodList */
       this.noFilters = function() {
@@ -231,27 +232,49 @@
         FilterProvider = provider;
       };
 
+      this._setServiceProvider = function(provider) {
+        ServiceProvider = provider;
+      };
+
       this.$get = [function() {
           return {
             initFilters: initializeFilters,
             initUtils: initializeUtils,
-            filterProvider: FilterProvider
+            filterProvider: FilterProvider,
+            serviceProvider: ServiceProvider
           };
       }];
   })
-  .factory('_', ['$window', function($window) {
-    return $window._;
-  }])
-  .config(['ngDashConfigProvider', '$filterProvider', function(ngDashConfigProvider, $filterProvider) {
+  .config(['ngDashConfigProvider', '$filterProvider', '$provide', function(ngDashConfigProvider, $filterProvider, $provide) {
     /* keep reference to filter provider so we can register filters inside run block */
     ngDashConfigProvider._setFilterProvider($filterProvider);
+
+    /* keep reference to service provider so we can register _ service inside run block, IF no one has registered it before */
+    ngDashConfigProvider._setServiceProvider($provide);
   }])
-  .run(['$rootScope', 'ngDashConfig', function($rootScope, ngDashConfig) {
+  .run(['$rootScope', '$injector', '$window', '$log', 'ngDashConfig', function($rootScope, $injector, $window, $log, ngDashConfig) {
+    /* create service, but do not override existing! */
+    if($injector.has('_')) {
+      $log.error('ropooy-angular-lodash:: service "_" is already registered, please remove your own if you want to use it from here.');
+    }
+    else {
+      ngDashConfig.serviceProvider.constant('_', $window._);
+    }
+
+    var _logMissingMethod = function(action, method) {
+      $log.warn('ropooy-angular-lodash:: ' + action + ' registeration, _.' + method + ' is not a function. Cannot register it as ' + action + '!');
+    };
+
     /* create filters */
     if(ngDashConfig.initFilters) {
       FilterMethodList = _.flatten(FilterMethodList);
 
       _.each(FilterMethodList, function(filterName) {
+        if(!_.isFunction(_[filterName])) {
+          _logMissingMethod('$filter', filterName);
+          return;
+        }
+
         ngDashConfig.filterProvider.register(filterName, function() {
           return _[filterName];
         });
@@ -265,6 +288,11 @@
       }
 
       _.each(UtilMethodList, function(methodName) {
+        if(!_.isFunction(_[methodName])) {
+          _logMissingMethod('util', methodName);
+          return;
+        }
+
         var ScopeProto = _.isFunction(Object.getPrototypeOf) ? Object.getPrototypeOf($rootScope) : $rootScope;
         //bind methods to Scope prototype or $rootScope if getPrototypeOf is not defined.
         ScopeProto[methodName] = _.bind(_[methodName], _);

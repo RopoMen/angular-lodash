@@ -2,7 +2,9 @@
   "name": "angular-lodash",
   "main": "angular-lodash.js",
   "version": "1.0.0",
-  "authors": ["Markku Roponen <ropooy@gmail.com>"],
+  "authors": [
+    "Markku Roponen <ropooy@gmail.com>"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

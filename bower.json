@@ -22,5 +22,9 @@
   ],
   "dependencies": {
     "lodash": "~2.4.1"
+  },
+  "devDependencies": {
+    "angular": "^1.4.3",
+    "angular-mocks": "^1.4.3"
   }
 }

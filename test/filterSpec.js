@@ -1,7 +1,7 @@
 'use strict';
 
-describe('ropooy-angular-lodash: Filter', function() {
-  beforeEach(module('ropooy-angular-lodash'));
+describe('ropooy-angular-rdash: Filter', function() {
+  beforeEach(module('ropooy-angular-rdash'));
 
   var stooges = [
     {name : 'moe', age : 40},

@@ -1,5 +1,5 @@
 {
-  "name": "ropooy-angular-lodash",
+  "name": "ropooy-angular-rdash",
   "description": "LoDash adapter for AngularJS.",
   "version": "1.4.0",
   "author": "Markku Roponen <ropooy@gmail.com>",
@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/RopoMen/ropooy-angular-lodash.git"
+    "url": "https://github.com/RopoMen/ropooy-angular-rdash.git"
   },
   "keywords": [
     "angularjs",

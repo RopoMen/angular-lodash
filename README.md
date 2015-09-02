@@ -14,13 +14,13 @@ See release history at the bottom of the page.
 
 #### Installation
 ```bash
-bower install ropooy-angular-lodash --save-dev
+bower install ropooy-angular-rdash --save-dev
 ```
 
 #### Load the whole library and configure it as you like!
 
 ```javascript
-angular.module('app', ['ropooy-angular-lodash'])
+angular.module('app', ['ropooy-angular-rdash'])
 .config(['ngDashConfigProvider', function(ngDashConfigProvider) {
   // do not load / register filters
   ngDashConfigProvider.noFilters();
@@ -89,7 +89,7 @@ ngDashConfigProvider.setUtils(['isEmpty', 'isNull', 'isArray', 'range']);
 Default stuff for these examples.
 ```html
 <script type="text/javascript">
-  angular.module('myApp', ['ropooy-angular-lodash'])
+  angular.module('myApp', ['ropooy-angular-rdash'])
   .config(function(ngDashConfigProvider) {
     ngDashConfigProvider.registerCustomFilter('customUniq', function(arr) {
       return this.uniq(this.filter(arr, function(n) {
@@ -167,6 +167,6 @@ Cleaner way to use LoDash inside angular directives, services, controllers or ev
 * **v0.6 beta** - breaking changes
   * completely rewritten module structure. Added ngLoDashProvider which is used to configure filter methods and utility methods.
 * **v0.5 beta** - breaking changes
-  * changed the filter method list, it does not match to the original 'angular-lodash' [e07e8365](https://github.com/RopoMen/ropooy-angular-lodash/commit/e07e836561c454ec3f2a325ea4da0233e8c44425)
-  * added DI service '_', which may break your own version [b78a42bc](https://github.com/RopoMen/ropooy-angular-lodash/commit/b78a42bc45c820b79151ae4a5e2fbdfd733ca2f7)
-  * removed individual util method or filter method loading, meaning you cannot load anymore `ropooy-angular-lodash/utils/isEmpty` or `ropooy-angular-lodash/filters/escape` separately. Instead you need to load whole utility module and/or filters module. [4f317c68](https://github.com/RopoMen/ropooy-angular-lodash/commit/4f317c686d8c05d94825371fa0c7472b4a6ce62c)
+  * changed the filter method list, it does not match to the original 'angular-lodash' [e07e8365](https://github.com/RopoMen/ropooy-angular-rdash/commit/e07e836561c454ec3f2a325ea4da0233e8c44425)
+  * added DI service '_', which may break your own version [b78a42bc](https://github.com/RopoMen/ropooy-angular-rdash/commit/b78a42bc45c820b79151ae4a5e2fbdfd733ca2f7)
+  * removed individual util method or filter method loading, meaning you cannot load anymore `ropooy-angular-rdash/utils/isEmpty` or `ropooy-angular-rdash/filters/escape` separately. Instead you need to load whole utility module and/or filters module. [4f317c68](https://github.com/RopoMen/ropooy-angular-rdash/commit/4f317c686d8c05d94825371fa0c7472b4a6ce62c)

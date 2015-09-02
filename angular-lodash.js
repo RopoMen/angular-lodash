@@ -1,7 +1,7 @@
 (function (angular, _) {
   'use strict';
 
-  var ngDashModule = angular.module('ropooy-angular-lodash', []);
+  var ngDashModule = angular.module('ropooy-angular-rdash', []);
   var FilterMethodList = [
     // Arrays
     'chunk',
@@ -312,7 +312,7 @@
       this.registerCustomFilter = function(filterName, filterConstructor) {
         if(_.isEmpty(FilterProvider)) {
           // http://stackoverflow.com/questions/28620927/angularjs-provider-dependency-injection-using-log-in-provider
-          // $log.error('ropooy-angular-lodash: registering custom filter, FilterProvider is not available!');
+          // $log.error('ropooy-angular-rdash: registering custom filter, FilterProvider is not available!');
           return;
         }
 
@@ -363,14 +363,14 @@
   .run(function($rootScope, $injector, $window, $log, ngDashConfig) {
     /* create service, but do not override existing! */
     if($injector.has('_')) {
-      $log.error('ropooy-angular-lodash:: service "_" is already registered, please remove your own if you want to use it from here.');
+      $log.error('ropooy-angular-rdash:: service "_" is already registered, please remove your own if you want to use it from here.');
     }
     else {
       ngDashConfig.serviceProvider.constant('_', $window._);
     }
 
     var _logMissingMethod = function(action, method) {
-      $log.warn('ropooy-angular-lodash:: ' + action + ' registeration, _.' + method + ' is not a function. Cannot register it as ' + action + '!');
+      $log.warn('ropooy-angular-rdash:: ' + action + ' registeration, _.' + method + ' is not a function. Cannot register it as ' + action + '!');
     };
 
     /* create filters */

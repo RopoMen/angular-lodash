@@ -8,7 +8,7 @@
 (function (angular, _) {
   'use strict';
 
-  var ngDashModule = angular.module('ropooy-angular-lodash', []);
+  var ngDashModule = angular.module('ropooy-angular-rdash', []);
   var FilterMethodList = [
     // Arrays
     'compact',

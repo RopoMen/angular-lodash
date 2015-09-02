@@ -10,7 +10,7 @@ First of all AngularJS [Filter developer guide](https://docs.angularjs.org/guide
 Ok, now let's start discussion of the rulez!
 
 1. Selected method **cannot** alter the original value. This means that it is not allowed to remove any values from original Array or Object. It also cannot change the original String or Number in anyways.
-1. *They can be used in view templates, controllers or services...*, when we start to thinking about this, we should remember that `ropooy-angular-lodash` is providing service `_`, which can be injected in to Service, Controller, Directive and Filter.
+1. *They can be used in view templates, controllers or services...*, when we start to thinking about this, we should remember that `ropooy-angular-rdash` is providing service `_`, which can be injected in to Service, Controller, Directive and Filter.
 
 	Example below shows the ways how you can currently use LoDash functions inside Service, Controller, Directive or Filter. If you ask from me, I would use service `_` instead of any other ways. (less writing)
 	```javascript

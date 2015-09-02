@@ -8,7 +8,7 @@
 
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
 
-	<script type="text/javascript" src="../bower_components/lodash/dist/lodash.min.js"></script>
+	<script type="text/javascript" src="../bower_components/lodash/lodash.min.js"></script>
 	<script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
 	<script type="text/javascript" src="../angular-lodash.js"></script>
 
@@ -81,6 +81,9 @@
 				<!-- yes this will cause "Error: [$rootScope:infdig]" atm. because array reference proviced by 'uniq' filter changes and for that 10 $digest loop limit will be hitted.-->
 				<li ng-repeat="num in mixd |uniq">Should be uniq {{num}}</li>
 			</ul>
+
+			<h5 class="text-primary">Using new String filters</h5>
+			<span>{{'--snake-case' |snakeCase}}</span><br />
 
 			<h5 class="text-primary">Using 'uniq' and 'shuffle' as filter</h5>
 			<ul>

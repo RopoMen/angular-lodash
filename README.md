@@ -161,6 +161,7 @@ Cleaner way to use LoDash inside angular directives, services, controllers or ev
 ```
 
 ### History
+* **v1.5** - breaking changes, renamed the whole repository and re-registered in to Bower.
 * **v1.4** - support for LoDash v3.10.1. Fixed examples and unit tests to match new filter list.
 * **v1.3** - ability to add your own LoDash mixins as $filter. This can be done either in .config() phase or for example .directive() pre compile phase as lazy load.
 * **v1.0** - first version available through Bower, supports LoDash v2.4.1

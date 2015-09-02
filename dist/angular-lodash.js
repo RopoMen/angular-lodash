@@ -1,8 +1,8 @@
 /**
- * ropooy-angular-lodash - LoDash adapter for AngularJS.
- * @build time 2015-09-29 12:09
+ * ropooy-angular-rdash - LoDash adapter for AngularJS.
+ * @build time 2015-16-02 19:16
  * @author Markku Roponen <ropooy@gmail.com>
- * @version v1.0.0
+ * @version v1.5.0
  * @license MIT
  */
 (function (angular, _) {
@@ -11,137 +11,223 @@
   var ngDashModule = angular.module('ropooy-angular-rdash', []);
   var FilterMethodList = [
     // Arrays
+    'chunk',
     'compact',
     'difference',
-    ['rest', 'drop', 'tail'],
+    'drop',
+    'dropRight',
+    'dropRightWhile',
+    'dropWhile',
+    //'fill',
     //'findIndex',
     //'findLastIndex',
-    ['first', 'head', 'take'],
+    //['first', 'head'],
     'flatten',
+    'flattenDeep',
     //'indexOf',
     'initial',
     'intersection',
-    'last',
-    'lastIndexOf',
+    //'last',
+    //'lastIndexOf',
     //'pull',
-    //'range',
+    //'pullAt',
     //'remove',
-    'sortedIndex',
-    //['tail', 'rest'],
+    ['rest', 'tail'],
+    'slice',
+    'sortedIndex', // TODO: added because of unit tests. also wrapped filter.
+    //'sortedLastIndex',
+    'take',
+    'takeRight',
+    'takeRightWhile',
+    'takeWhile',
     'union',
     ['uniq', 'unique'],
+    'unzip',
+    'unzipWith',
     'without',
     'xor',
-    ['zip', 'unzip'],
+    'zip',
     //['zipObject', 'object'],
+    'zipWith',
 
     //Chaining, none
     //'_',
     //'chain',
     //'tap',
+    //'thru'
 
     //Collections
     'at',
-    //['contains', 'include'],
     'countBy',
     //['every', 'all'],
-    ['find', 'detect', 'findWhere'],
     ['filter', 'select'],
+    ['find', 'detect'],
     'findLast',
+    'findWhere',
     //['forEach', 'each'],
     //['forEachRight', 'eachRight'],
     'groupBy',
+    //['includes', 'contains', 'include'],
     'indexBy',
     'invoke',
     ['map', 'collect'],
-    'max',
-    'min',
+    'partition',
     'pluck',
-    //['reduce', 'foldl', 'inject'],
-    //['reduceRight', 'foldr'],
+    ['reduce', 'foldl', 'inject'],
+    ['reduceRight', 'foldr'],
     'reject',
-    //'sample',
+    'sample',
     'shuffle',
     //'size',
     //['some', 'any'],
     'sortBy',
-    'toArray',
+    'sortByAll',
+    'sortByOrder',
     'where',
+
+    //Date, none
+    //'now',
 
     //Functions, none
     //'after',
+    //'ary',
+    //'before',
     //'bind',
     //'bindAll',
     //'bindKey',
-    //'compose',
     //'curry',
+    //'curryRight',
     //'debounce',
     //'defer',
     //'delay',
+    //'flow',
+    //['flowRight', 'backflow', 'compose'],
     //'memoize',
+    //'modArgs',
+    //'negate',
     //'once',
     //'partial',
     //'partialRight',
+    //'rearg',
+    //'restParam',
+    //'spread',
     //'throttle',
     //'wrap',
 
-    //Objects
-    //['assign', 'extend'],
+    //Lang
     //'clone',
     //'cloneDeep',
-    //'create',
-    //'defaults',
-    //'findKey',
-    //'findLastKey',
-    //'forIn'
-    //'forInRight',
-    //'forOwn',
-    ['functions', 'methods'],
-    //'has',
-    'invert',
+    //'gt',
+    //'gte',
     //'isArguments',
     //'isArray',
     //'isBoolean',
     //'isDate',
     //'isElement',
     //'isEmpty',
-    //'isEqual',
+    //['isEqual', 'eq'],
+    //'isError',
     //'isFinite',
     //'isFunction',
+    //'isMatch',
     //'isNaN',
+    //'isNative',
     //'isNull',
     //'isNumber',
     //'isObject',
     //'isPlainObject',
     //'isRegExp',
     //'isString',
+    //'isTypedArray',
     //'isUndefined',
+    //'lt',
+    //'lte',
+    'toArray',
+    //'toPlainObject',
+
+    //Math
+    'add',
+    'ceil',
+    'floor',
+    'max',
+    'min',
+    'round',
+    'sum',
+
+    //Number
+    //'inRange',
+    //'random',
+
+    //Objects
+    //['assign', 'extend'],
+    //'create',
+    //'defaults',
+    //'defaultsDeep',
+    //'findKey',
+    //'findLastKey',
+    //'forIn'
+    //'forInRight',
+    //'forOwn',
+    //'forOwnRight',
+    ['functions', 'methods'],
+    'get',
+    //'has',
+    'invert',
     'keys',
+    'keysIn',
+    'mapKeys',
     'mapValues',
-    //'merge',
+    'merge',
     'omit',
     'pairs',
     'pick',
-    //'transform',
+    'result',
+    //'set',
+    'transform',
     'values',
+    'valuesIn',
+
+    //String
+    'camelCase',
+    'capitalize',
+    'deburr',
+    //'endsWith',
+    'escape',
+    'escapeRegExp',
+    'kebabCase',
+    'pad',
+    'padLeft',
+    'padRight',
+    'parseInt',
+    'repeat',
+    'snakeCase',
+    'startCase',
+    'startsWith',
+    //'template',
+    'trim',
+    'trimLeft',
+    'trimRight',
+    'trunc',
+    'unescape',
+    'words',
 
     //Utilities
-    //'now',
+    //'attempt',
+    //['callback', 'iteratee'],
     //'constant',
-    //'createCallback',
-    'escape',
     //'identity',
+    //'matches',
+    //'matchesProperty',
+    //'method',
+    //'methodOf',
     //'mixin',
     //'noConflict',
     //'noop',
-    'parseInt',
     //'property',
-    //'random',
-    'result',
+    //'propertyOf',
+    //'range',
     //'runInContext',
-    //'template',
-    //'times'
-    'unescape',
+    'times',
     'uniqueId'
   ];
 
@@ -202,6 +288,7 @@
       var initializeFilters = true;
       var initializeUtils = true;
       var FilterProvider = {};
+      var ServiceProvider = {};
 
       /* do not initialize filters that are defined in FilterMethodList */
       this.noFilters = function() {
@@ -228,6 +315,27 @@
         FilterMethodList = _.difference(_.flatten(FilterMethodList), filters);
       };
 
+      /* register custom filter */
+      this.registerCustomFilter = function(filterName, filterConstructor) {
+        if(_.isEmpty(FilterProvider)) {
+          // http://stackoverflow.com/questions/28620927/angularjs-provider-dependency-injection-using-log-in-provider
+          // $log.error('ropooy-angular-rdash: registering custom filter, FilterProvider is not available!');
+          return;
+        }
+
+        /* filter is not yet bind to LoDash */
+        if(!_.isFunction(_[filterName])) {
+          var obj = {};
+          obj[filterName] = _.bind(filterConstructor, _);
+          _.mixin(obj);
+        }
+
+        /* now register it as filter */
+        FilterProvider.register(filterName, function() {
+          return _[filterName];
+        });
+      };
+
       /* set whole util method list, expectin utils to be an array, if no list is given all methods in _ will be used */
       this.setUtils = function(utils) {
         UtilMethodList = utils;
@@ -238,27 +346,50 @@
         FilterProvider = provider;
       };
 
+      this._setServiceProvider = function(provider) {
+        ServiceProvider = provider;
+      };
+
       this.$get = [function() {
           return {
             initFilters: initializeFilters,
             initUtils: initializeUtils,
-            filterProvider: FilterProvider
+            filterProvider: FilterProvider,
+            serviceProvider: ServiceProvider,
+            registerCustomFilter: this.registerCustomFilter // make this available after .config() phase.
           };
       }];
   })
-  .factory('_', ['$window', function($window) {
-    return $window._;
-  }])
-  .config(['ngDashConfigProvider', '$filterProvider', function(ngDashConfigProvider, $filterProvider) {
+  .config(['ngDashConfigProvider', '$filterProvider', '$provide', function(ngDashConfigProvider, $filterProvider, $provide) {
     /* keep reference to filter provider so we can register filters inside run block */
     ngDashConfigProvider._setFilterProvider($filterProvider);
+
+    /* keep reference to service provider so we can register _ service inside run block, IF no one has registered it before */
+    ngDashConfigProvider._setServiceProvider($provide);
   }])
-  .run(['$rootScope', 'ngDashConfig', function($rootScope, ngDashConfig) {
+  .run(['$rootScope', '$injector', '$window', '$log', 'ngDashConfig', function($rootScope, $injector, $window, $log, ngDashConfig) {
+    /* create service, but do not override existing! */
+    if($injector.has('_')) {
+      $log.error('ropooy-angular-rdash:: service "_" is already registered, please remove your own if you want to use it from here.');
+    }
+    else {
+      ngDashConfig.serviceProvider.constant('_', $window._);
+    }
+
+    var _logMissingMethod = function(action, method) {
+      $log.warn('ropooy-angular-rdash:: ' + action + ' registeration, _.' + method + ' is not a function. Cannot register it as ' + action + '!');
+    };
+
     /* create filters */
     if(ngDashConfig.initFilters) {
       FilterMethodList = _.flatten(FilterMethodList);
 
       _.each(FilterMethodList, function(filterName) {
+        if(!_.isFunction(_[filterName])) {
+          _logMissingMethod('$filter', filterName);
+          return;
+        }
+
         ngDashConfig.filterProvider.register(filterName, function() {
           return _[filterName];
         });
@@ -272,6 +403,11 @@
       }
 
       _.each(UtilMethodList, function(methodName) {
+        if(!_.isFunction(_[methodName])) {
+          _logMissingMethod('util', methodName);
+          return;
+        }
+
         var ScopeProto = _.isFunction(Object.getPrototypeOf) ? Object.getPrototypeOf($rootScope) : $rootScope;
         //bind methods to Scope prototype or $rootScope if getPrototypeOf is not defined.
         ScopeProto[methodName] = _.bind(_[methodName], _);
